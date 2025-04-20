@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+# Detect desktop environment
+if [[ "$XDG_CURRENT_DESKTOP" =~ KDE ]]; then
+    NOTIFY_TOOL="kdialog"
+else
+    NOTIFY_TOOL="zenity"
+fi
+
+function notify_success() {
+    if [[ "$NOTIFY_TOOL" == "kdialog" ]]; then
+        kdialog --title "BlendOS Update" --yesno "System updated successfully. Reboot now?" --yes-label "Reboot" --no-label "Later"
+        [[ $? -eq 0 ]] && systemctl reboot
+    else
+        zenity --question --title="BlendOS Update" --text="System updated successfully. Reboot now?" --ok-label="Reboot" --cancel-label="Later"
+        [[ $? -eq 0 ]] && systemctl reboot
+    fi
+}
+
+function notify_failure() {
+    if [[ "$NOTIFY_TOOL" == "kdialog" ]]; then
+        kdialog --error "BlendOS Update failed. Please run 'akshara update' manually."
+    else
+        zenity --error --title="BlendOS Update" --text="BlendOS Update failed. Please run 'akshara update' manually."
+    fi
+}
+
+# Run the update
+if akshara update; then
+    notify_success
+else
+    notify_failure
+fi
+

@@ -1,0 +1,10 @@
+[Unit]
+Description=Weekly BlendOS Update (Thursday at 12 AM)
+
+[Timer]
+OnCalendar=Thu *-*-* 00:00:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target
+

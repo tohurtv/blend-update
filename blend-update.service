@@ -1,0 +1,6 @@
+[Unit]
+Description=Run BlendOS Akshara Update
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/blend-update

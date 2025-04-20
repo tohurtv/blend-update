@@ -24,8 +24,9 @@ Install the script with:
 
 ```bash
 curl -sSL https://raw.githubusercontent.com/tohurtv/blend-update/main/install.sh | bash
-
+```
 Or in your system.yaml with
+
 ```yaml
 packages:
   - kdialog  # Required for KDE notifications
@@ -33,3 +34,4 @@ packages:
 
 commands:
   - curl -sSL https://raw.githubusercontent.com/tohurtv/blend-update/main/install.sh | bash
+```

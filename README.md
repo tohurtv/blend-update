@@ -1,6 +1,6 @@
 # blend-update
 
-A simple update notifier script for [BlendOS](https://blendos.co/) users who prefer a scheduled, hands-off update experience.
+A simple updater and notifier script for [BlendOS](https://blendos.co/) users who prefer a scheduled, hands-off update experience.
 
 This script automates `akshara update`, monitors for failure, and sends persistent desktop notifications via `kdialog` (for KDE Plasma) or `zenity` (for GNOME or GTK-based desktop environments). After a successful update, the user is prompted to reboot or defer. It runs weekly via a systemd timer, scheduled for **every Thursday at 12:00 AM** by default.
 

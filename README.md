@@ -29,9 +29,9 @@ Or in your system.yaml with
 
 ```yaml
 packages:
-  - kdialog  # Required for KDE notifications
-  - zenity   # Required for other DEs
+  - 'kdialog'  # Required for KDE notifications
+  - 'zenity'   # Required for other DEs
 
 commands:
-  - curl -sSL https://raw.githubusercontent.com/tohurtv/blend-update/main/install.sh | bash
+  - 'curl -sSL https://raw.githubusercontent.com/tohurtv/blend-update/main/install.sh | bash'
 ```

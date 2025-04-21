@@ -27,6 +27,11 @@ Install the script manually with:
 ```bash
 curl -sSL https://raw.githubusercontent.com/tohurtv/blend-update/main/install.sh | bash
 ```
+With a custom time
+
+```bash
+curl -sSL https://raw.githubusercontent.com/tohurtv/blend-update/main/install.sh | bash -s -- "Mon,Fri 12:00"
+```
 Or add it to your system.yaml for automatic inclusion in your BlendOS image:
 
 ```yaml
@@ -36,4 +41,13 @@ packages:
 
 commands:
   - 'curl -sSL https://raw.githubusercontent.com/tohurtv/blend-update/main/install.sh | bash'
+```
+ Or add it to your system.yaml with a custom time
+```yaml
+packages:
+  - 'kdialog'  # For KDE Plasma users
+  - 'zenity'   # For GNOME or GTK-based DEs
+
+commands:
+  - 'curl -sSL https://raw.githubusercontent.com/tohurtv/blend-update/main/install.sh | bash -s -- "Mon,Fri 12:00"'
 ```

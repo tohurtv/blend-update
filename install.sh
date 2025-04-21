@@ -2,39 +2,34 @@
 
 set -e
 
-GITHUB_USER="tohurtv"
-REPO_NAME="blend-update"
-BRANCH="main"
-RAW_BASE_URL="https://raw.githubusercontent.com/$GITHUB_USER/$REPO_NAME/$BRANCH"
-
-# File paths
+# Define install locations
 SCRIPT_PATH="/usr/local/bin/blend-update"
 SERVICE_PATH="/etc/systemd/system/blend-update.service"
 TIMER_PATH="/etc/systemd/system/blend-update.timer"
 
-download_if_missing() {
-  local name=$1
-  local dest=$2
+# GitHub repo base URL (raw)
+BASE_URL="https://raw.githubusercontent.com/tohurtv/blend-update/main"
 
-  if [[ -f "$dest" ]]; then
-    echo "✓ $name already exists at $dest"
-  else
-    echo "⏬ Downloading $name..."
-    curl -fsSL "$RAW_BASE_URL/$name" -o "$dest"
-  fi
-}
-
-# Download and install if missing
-download_if_missing "blend-update.sh" "$SCRIPT_PATH"
+# Download and overwrite the update script
+echo "Installing blend-update script..."
+curl -sSL "${BASE_URL}/blend-update" -o "$SCRIPT_PATH"
 chmod +x "$SCRIPT_PATH"
 
-download_if_missing "blend-update.service" "$SERVICE_PATH"
-download_if_missing "blend-update.timer" "$TIMER_PATH"
+# Download and overwrite the service file
+echo "Installing systemd service..."
+curl -sSL "${BASE_URL}/blend-update.service" -o "$SERVICE_PATH"
 
-# Reload and enable the timer
-echo "🔄 Reloading systemd and enabling timer..."
+# Download and overwrite the timer file
+echo "Installing systemd timer..."
+curl -sSL "${BASE_URL}/blend-update.timer" -o "$TIMER_PATH"
+
+# Reload systemd daemon to pick up new/updated units
+echo "Reloading systemd daemon..."
 systemctl daemon-reexec
 systemctl daemon-reload
+
+# Enable and start the timer
+echo "Enabling and starting the update timer..."
 systemctl enable --now blend-update.timer
 
-echo "✅ blend-update installed and scheduled successfully!"
+echo "✅ blend-update has been installed and scheduled. You're all set!"

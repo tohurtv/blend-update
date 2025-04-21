@@ -1,5 +1,5 @@
 [Unit]
-Description=Weekly BlendOS Update (Thursday at 12 AM)
+Description=Scheduled BlendOS Update
 
 [Timer]
 OnCalendar=Thu *-*-* 00:00:00

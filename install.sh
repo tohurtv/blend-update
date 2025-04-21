@@ -10,6 +10,9 @@ TIMER_PATH="/etc/systemd/system/blend-update.timer"
 # GitHub repo base URL (raw)
 BASE_URL="https://raw.githubusercontent.com/tohurtv/blend-update/main"
 
+# Optional: Accept custom timer interval as argument
+CUSTOM_INTERVAL="$1"
+
 # Download and overwrite the update script
 echo "Installing blend-update script..."
 curl -sSL "${BASE_URL}/blend-update" -o "$SCRIPT_PATH"
@@ -19,9 +22,24 @@ chmod +x "$SCRIPT_PATH"
 echo "Installing systemd service..."
 curl -sSL "${BASE_URL}/blend-update.service" -o "$SERVICE_PATH"
 
-# Download and overwrite the timer file
-echo "Installing systemd timer..."
-curl -sSL "${BASE_URL}/blend-update.timer" -o "$TIMER_PATH"
+# Handle timer file: custom or from repo
+if [[ -n "$CUSTOM_INTERVAL" ]]; then
+  echo "Creating custom timer with interval: $CUSTOM_INTERVAL"
+  cat <<EOF > "$TIMER_PATH"
+[Unit]
+Description=Run blend-update at custom interval
+
+[Timer]
+OnCalendar=$CUSTOM_INTERVAL
+Persistent=true
+
+[Install]
+WantedBy=timers.target
+EOF
+else
+  echo "Installing systemd timer from repo..."
+  curl -sSL "${BASE_URL}/blend-update.timer" -o "$TIMER_PATH"
+fi
 
 # Reload systemd daemon to pick up new/updated units
 echo "Reloading systemd daemon..."

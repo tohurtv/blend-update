@@ -30,6 +30,6 @@ systemctl daemon-reload
 
 # Enable and start the timer
 echo "Enabling and starting the update timer..."
-systemctl enable --now blend-update.timer
+systemctl enable blend-update.timer
 
 echo "✅ blend-update has been installed and scheduled. You're all set!"

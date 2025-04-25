@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Detect desktop environment
-if [[ "$XDG_CURRENT_DESKTOP" =~ KDE ]]; then
+if [[ -f "/usr/bin/kdialog" ]]; then
     NOTIFY_TOOL="kdialog"
 else
     NOTIFY_TOOL="zenity"

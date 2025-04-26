@@ -1,28 +1,17 @@
 #!/usr/bin/env bash
 
-# Detect desktop environment
-if [[ -f "/usr/bin/kdialog" ]]; then
-    NOTIFY_TOOL="kdialog"
-else
-    NOTIFY_TOOL="zenity"
-fi
-
 function notify_success() {
-    if [[ "$NOTIFY_TOOL" == "kdialog" ]]; then
-        kdialog --title "BlendOS Update" --yesno "System updated successfully. Reboot now?" --yes-label "Reboot" --no-label "Later"
-        [[ $? -eq 0 ]] && systemctl reboot
-    else
-        zenity --question --title="BlendOS Update" --text="System updated successfully. Reboot now?" --ok-label="Reboot" --cancel-label="Later"
-        [[ $? -eq 0 ]] && systemctl reboot
+    CHOICE=$(notify-send.py "BlendOS Update" "System updated successfully. Reboot now?" \
+        --hint boolean:action-icons:true \
+        --action reboot:Reboot later:Later)
+
+    if [[ "$CHOICE" == "reboot" ]]; then
+        systemctl reboot
     fi
 }
 
 function notify_failure() {
-    if [[ "$NOTIFY_TOOL" == "kdialog" ]]; then
-        kdialog --error "BlendOS Update failed. Please run 'akshara update' manually."
-    else
-        zenity --error --title="BlendOS Update" --text="BlendOS Update failed. Please run 'akshara update' manually."
-    fi
+    notify-send.py "BlendOS Update Failed" "Please run 'akshara update' manually." --icon dialog-error
 }
 
 # Run the update
@@ -31,4 +20,3 @@ if akshara update; then
 else
     notify_failure
 fi
-

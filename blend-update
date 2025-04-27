@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
 
 function notify_success() {
-    CHOICE=$(sudo blend-update-notify "BlendOS Update" "System updated successfully. Reboot now?" \
+    CHOICE=$(sudo blend-update-notify "BlendOS Update" "System updated successfully. Please reboot to finish the update." \
         --app-name "blendOS Update" \
         --icon blendos-logo \
-        --expire-time 0 \
-        --hint boolean:action-icons:true \
-         --action reboot:Reboot later:Later)
+        --expire-time 0)
+        # --hint boolean:action-icons:true \
+        #  --action reboot:Reboot later:Later)
 
-    if [[ "$CHOICE" == "reboot" ]]; then
-        systemctl reboot
-    fi
+    # if [[ "$CHOICE" == "reboot" ]]; then
+    #     systemctl reboot
+    # fi
 }
 
 function notify_failure() {

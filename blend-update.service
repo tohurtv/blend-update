@@ -1,9 +1,6 @@
 [Unit]
 Description=Run BlendOS Akshara Update
-After=graphical-session.target display-manager.service
 
 [Service]
 Type=oneshot
-Environment="DISPLAY=:0"
-Environment="XDG_RUNTIME_DIR=/run/user/1000"
 ExecStart=/usr/local/bin/blend-update

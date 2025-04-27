@@ -4,6 +4,7 @@ set -e
 
 # Define install locations
 SCRIPT_PATH="/usr/local/bin/blend-update"
+NOTIFY_SCRIPT_PATH="/usr/local/bin/blend-update-notify"
 SERVICE_PATH="/etc/systemd/system/blend-update.service"
 TIMER_PATH="/etc/systemd/system/blend-update.timer"
 
@@ -17,6 +18,10 @@ CUSTOM_INTERVAL="$1"
 echo "Installing blend-update script..."
 curl -sSL "${BASE_URL}/blend-update" -o "$SCRIPT_PATH"
 chmod +x "$SCRIPT_PATH"
+
+echo "Installing blend-update-notify script..."
+curl -sSL "${BASE_URL}/blend-update-notify" -o "$NOTIFY_SCRIPT_PATH"
+chmod +x "$NOTIFY_SCRIPT_PATH"
 
 # Download and overwrite the service file
 echo "Installing systemd service..."

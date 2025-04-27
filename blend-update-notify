@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Find the logged-in user
+USERID=$(who | grep 'tty' | awk '{print $1}' | head -n 1)
+USERNAME=$(getent passwd $USERID | cut -d: -f1)
+
+# Export the required environment variables
+export XAUTHORITY=/home/$USERNAME/.Xauthority
+export DISPLAY=:0
+export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$USERID/bus
+
+# Check if we are root or not, then use the right user for notifications
+if [ "$(/usr/bin/id -u)" != "$USERID" ]; then
+    sudo -u $USERNAME XAUTHORITY=/home/$USERNAME/.Xauthority DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$USERID/bus /usr/bin/notify-send.py "$@"
+else
+    /usr/bin/notify-send.py "$@"
+fi

@@ -1,22 +1,49 @@
-#!/usr/bin/env bash
+#!/usr/bin/env python3
 
-function notify_success() {
-    CHOICE=$(notify-send.py "BlendOS Update" "System updated successfully. Reboot now?" \
-        --hint boolean:action-icons:true \
-        --action reboot:Reboot later:Later)
+import os
+import subprocess
+import sys
 
-    if [[ "$CHOICE" == "reboot" ]]; then
-        systemctl reboot
-    fi
-}
+def find_user_bus():
+    for uid in os.listdir("/run/user"):
+        bus_path = f"/run/user/{uid}/bus"
+        if os.path.exists(bus_path):
+            return f"unix:path={bus_path}"
+    return None
 
-function notify_failure() {
-    notify-send.py "BlendOS Update Failed" "Please run 'akshara update' manually." --icon dialog-error
-}
+def notify_update_success():
+    env = os.environ.copy()
+    env["DBUS_SESSION_BUS_ADDRESS"] = find_user_bus()
 
-# Run the update
-if akshara update; then
-    notify_success
-else
-    notify_failure
-fi
+    result = subprocess.run([
+        "notify-send.py",
+        "BlendOS Update",
+        "System updated successfully. Reboot now?",
+        "--hint", "boolean:action-icons:true",
+        "--action", "reboot:Reboot", "later:Later"
+    ], env=env, capture_output=True, text=True)
+
+    if result.returncode == 0:
+        action = result.stdout.strip()
+        if action == "reboot":
+            subprocess.run(["systemctl", "reboot"], check=False)
+
+def notify_update_failure():
+    env = os.environ.copy()
+    env["DBUS_SESSION_BUS_ADDRESS"] = find_user_bus()
+
+    subprocess.run([
+        "notify-send.py",
+        "BlendOS Update Failed",
+        "Please run 'akshara update' manually.",
+    ], env=env, check=True)
+
+def main():
+    try:
+        subprocess.run(["akshara", "update"], check=True)
+        notify_update_success()
+    except subprocess.CalledProcessError:
+        notify_update_failure()
+
+if __name__ == "__main__":
+    main()

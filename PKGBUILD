@@ -29,3 +29,7 @@ package() {
   install -Dm644 blend-update.timer "$pkgdir/usr/lib/systemd/system/blend-update.timer"
 }
 
+post_install() {
+  echo "Enabling and starting blend-update.timer..."
+  systemctl enable --now blend-update.timer
+}

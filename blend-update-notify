@@ -12,7 +12,9 @@ export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$USERID/bus
 # Check if we are root or not, then use the right user for notifications
 if [ "$(/usr/bin/id -u)" != "$USERID" ]; then
     sudo -u $USERNAME XAUTHORITY=/home/$USERNAME/.Xauthority DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$USERID/bus /usr/bin/notify-send.py "$@"
+     exit $?
 else
     /usr/bin/notify-send.py "$@"
+     exit $?
 fi
 

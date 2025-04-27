@@ -18,7 +18,7 @@ This script automates `akshara update`, monitors for failure, and sends persiste
 - BlendOS with a desktop environment installed
 - `notify-send.py` aur package installed
 
-Make sure the appropriate notifier is listed in your `system.yaml` if not already present.
+Make sure `notify-send.py` listed in your `system.yaml` aur-packages if not already present.
 
 ## Installation
 

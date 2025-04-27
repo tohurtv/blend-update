@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Find the logged-in user
-USERID=$(who | grep 'tty' | awk '{print $1}' | head -n 1)
-USERNAME=$(getent passwd $USERID | cut -d: -f1)
+USERNAME=$(who | grep 'tty' | awk '{print $1}' | head -n 1)
+USERID=$(id -u $USERNAME)
 
 # Export the required environment variables
 export XAUTHORITY=/home/$USERNAME/.Xauthority
@@ -15,3 +15,4 @@ if [ "$(/usr/bin/id -u)" != "$USERID" ]; then
 else
     /usr/bin/notify-send.py "$@"
 fi
+

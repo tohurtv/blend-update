@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
 
 function notify_success() {
-    CHOICE=$(blend-update-notify "BlendOS Update" "System updated successfully. Reboot now?" \
+    CHOICE=$(sudo blend-update-notify "BlendOS Update" "System updated successfully. Reboot now?" \
+        --app-name "blendOS Update" \
+        --icon blendos-logo \
+        --expire-time 0 \
         --hint boolean:action-icons:true \
-        --action reboot:system-reboot later:window-close)
+         --action reboot:Reboot later:Later)
 
     if [[ "$CHOICE" == "reboot" ]]; then
         systemctl reboot
@@ -11,7 +14,7 @@ function notify_success() {
 }
 
 function notify_failure() {
-    blend-update-notify "BlendOS Update Failed" "Please run 'akshara update' manually." --icon dialog-error
+    sudo blend-update-notify "BlendOS Update Failed!" "Please run 'akshara update' manually." --app-name "blendOS Update" --expire-time 0 --icon dialog-error
 }
 
 # Run the update

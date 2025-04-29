@@ -3,8 +3,8 @@
 set -e
 
 # Define install locations
-SCRIPT_PATH="/usr/local/bin/blend-update"
-NOTIFY_SCRIPT_PATH="/usr/local/bin/blend-update-notify"
+SCRIPT_PATH="/usr/bin/blend-update"
+NOTIFY_SCRIPT_PATH="/usr/bin/blend-update-notify"
 SERVICE_PATH="/etc/systemd/system/blend-update.service"
 TIMER_PATH="/etc/systemd/system/blend-update.timer"
 

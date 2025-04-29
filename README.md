@@ -22,17 +22,7 @@ Make sure `notify-send.py` listed in your `system.yaml` aur-packages if not alre
 
 ## Installation
 
-Install the script manually with:
-
-```bash
-curl -sSL https://raw.githubusercontent.com/tohurtv/blend-update/main/install.sh | bash
-```
-With a custom time
-
-```bash
-curl -sSL https://raw.githubusercontent.com/tohurtv/blend-update/main/install.sh | bash -s -- "Mon,Fri 12:00"
-```
-Or add it to your system.yaml for automatic inclusion in your BlendOS image:
+Add it to your system.yaml for automatic inclusion in your BlendOS build:
 
 ```yaml
 aur-packages:

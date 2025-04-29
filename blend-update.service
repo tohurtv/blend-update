@@ -3,4 +3,4 @@ Description=Run BlendOS Akshara Update
 
 [Service]
 Type=oneshot
-ExecStart=/usr/local/bin/blend-update
+ExecStart=/usr/bin/blend-update

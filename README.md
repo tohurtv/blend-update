@@ -1,5 +1,6 @@
 # blend-update
 ![Screenshot](https://raw.githubusercontent.com/tohurtv/blend-update/refs/heads/main/assets/Screenshot.png "Screenshot")
+
 A simple updater and notifier script for [BlendOS](https://blendos.co/) users who prefer a scheduled, hands-off update experience.
 
 This script automates `akshara update`, monitors for failure, and sends persistent desktop notifications via `notify-send.py`. After a successful update, the user is prompted to reboot or defer. It runs weekly via a systemd timer, scheduled for **every Thursday at 12:00 AM** by default.

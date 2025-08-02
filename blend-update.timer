@@ -2,7 +2,7 @@
 Description=Scheduled BlendOS Update
 
 [Timer]
-OnCalendar=Thu *-*-* 00:00:00
+OnCalendar=Thu *-*-* 04:00:00
 Persistent=true
 
 [Install]
